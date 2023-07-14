@@ -1,57 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import { Counter } from "./features/counter/Counter";
+import "./App.css";
 
 function App() {
+  const [state, setState] = React.useState([]);
+  
+  const add__ = React.useCallback(()=>{
+    const value__ = document.getElementById("input_id").value
+    setState([...state , value__])
+  },[state])
+
+  const remeve_it = React.useCallback((id)=>{
+    const filter_arr = state.filter((i , index , arr)=> index !== id  )
+    setState(filter_arr)
+  },[state])
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+    <React.Fragment>
+      <div style={{ width: "120px" }}>
+        <div className="" style={{ display: " " }}>
+          <input type="text" id="input_id" />
+          <button onClick={()=>add__()}>ADD</button>
+        </div>
+        <div className="map">
+          {state?.length === 0
+            ? " "
+            : state?.map((i, index, arr) => {
+                return (
+                  <React.Fragment>
+                  <div
+                    className="task__"
+                    style={{
+                      lineHeight:"40px",
+                      width: "100%",
+                      padding: "4px 10px",
+                      backgroundColor: "yellow",
+                    }}
+                  >
+                    {i}
+                  </div>
+                  <button onClick={()=>remeve_it(index)}>x</button>
+                  </React.Fragment>
+                )
+              })}
+        </div>
+      </div>
+    </React.Fragment>
   );
 }
 
